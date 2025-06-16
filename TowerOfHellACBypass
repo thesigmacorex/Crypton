@@ -1,0 +1,20 @@
+local OldNameCall
+OldNameCall = hookmetamethod(game, "__namecall", function(self, ...)
+    local method = getnamecallmethod()
+    if method == "Kick" and self == game:GetService("Players").LocalPlayer then
+        return wait(math.huge)
+    end
+    return OldNameCall(self, ...)
+end)
+
+task.wait(1.6)
+
+local player = game:GetService("Players").LocalPlayer
+local ps = player:FindFirstChild("PlayerScripts")
+if ps then
+    for _, v in pairs(ps:GetChildren()) do
+        if v:IsA("LocalScript") and (v.Name == "LocalScript" or v.Name == "LocalScript2") then
+            v:Destroy()
+        end
+    end
+end
